@@ -1,38 +1,26 @@
 
-const agF = () => {
-  let total = 0;
-  this.values.forEach(value => total += value);
-  console.log(this);
-  return total;
-}
-
 export const columns = [
   {
     headerName: "GROUP1",
     children: [
-      {
-        field: "Col1", cellRenderer: "Image",
-        resizable: false,
-      },
+      { field: "Col1", cellRenderer: "Image" },
       { field: "Col2", },
-      {
-        field: "Col3",
-        // aggFunc:"sum" 
-      },
+      { field: "Col3" },
     ],
   },
   {
     headerName: "GROUP2",
     children: [
+      { field: "Col4"},
+      { field: "Col5", 
+      color:"red", },
       {
-        field: "Col4",
-        // aggFunc:"avg" 
-        filter: 'agNumberColumnFilter',
-      },
-      { field: "Col5", filter: true },
-      {
-        field: "Col6", filter: 'agTextColumnFilter',
-        // filterParams: { caseSensitive: true, defaultOption: 'startsWith', buttons:["apply","Clear"] }
+        field: "Col6",
+        filter: "agTextColumnFilter",
+        filterParams: {
+          buttons: ['reset', 'apply'],
+          debounceMs: 200
+        }
       }],
   },
 ]
