@@ -4,12 +4,14 @@ import { reactive, onMounted, ref, h } from "vue";
 import { values } from "./utils/values";
 import { columns } from "./utils/columns";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-material.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 
-import Image from './components/Image.vue';
-import img from "./utils/img";
+import Image from "./components/Image.vue";
 
+// import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
+// import { ModuleRegistry } from '@ag-grid-community/core';
 
+// ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 export default {
   name: "App",
@@ -24,17 +26,18 @@ export default {
       gridApi.value = params.api;
     };
 
-    const rowData = values;
+    const rowData =  reactive(values);
 
-    const columnDefs = columns;
+    const columnDefs = reactive(columns);
 
     const defaultColDef = {
-      sortable: true,
+      sortable: true, // 3 значение
       filter: false,
       resizable: true,
       suppressColumnVirtualisation: true,
       autoSizeColumn: true,
-      width: 150,
+      flex:1,
+      floatingFilter: true
     };
 
     return {
@@ -43,10 +46,14 @@ export default {
       defaultColDef,
       onGridReady,
       cellWasClicked: (e) => {
-        console.log("cell was clicked", e);
+        console.log(
+          "По клику на строку вести сообщение с серилизованными данными всей строки(всех колонок)",
+          e
+        );
       },
       deselectRows: (e) => {
-        gridApi.value.deselectAll();
+        console.log(gridApi.value);
+        console.log(e.value);
       },
     };
   },
@@ -57,7 +64,7 @@ export default {
   <div class="container">
     <button @click="deselectRows">deselect rows</button>
     <ag-grid-vue
-      class="ag-theme-material"
+      class="ag-theme-alpine"
       style="height: 500px"
       :columnDefs="columnDefs"
       :rowData="rowData"
@@ -68,6 +75,7 @@ export default {
       @grid-ready="onGridReady"
     >
     </ag-grid-vue>
+    <output>sda</output>
     <div></div>
   </div>
 </template>
@@ -82,6 +90,5 @@ export default {
   border: 2px solid white;
   background-color: rgb(35, 97, 2);
   min-width: 950px;
-  
 }
 </style>

@@ -1,6 +1,6 @@
 import mainArray from './array';
 
-export const values = mainArray(100).map((obj) => {
+export const values = mainArray(5).map((obj) => {
     const column = {}
     column.Col1 = `<h1>Display img from ${obj.val6} img path</h1>`,
         column.Col2 = obj.val1,
