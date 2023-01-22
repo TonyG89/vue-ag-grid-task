@@ -19,7 +19,17 @@ export default {
 
     const onGridReady = (params) => {
       gridApi.value = params.api;
-      console.log(columnDefs[0].children[0]);
+    };
+
+    const collectColumn = (e) => {
+      const data = e.data;
+      let info = "\nІнформація по рядку:\n(назва колонки та значення)\n";
+      for (let col in data) {
+        info += `
+          \t ${col} - ${data[col]}
+            `;
+      }
+      alert(info);
     };
 
     const rowData = reactive(values);
@@ -41,11 +51,10 @@ export default {
       columnDefs,
       defaultColDef,
       onGridReady,
-      cellWasClicked: (e) => {
-        console.log("cell was clicked", e);
-      },
+      collectColumn,
       deselectRows: (e) => {
         gridApi.value.deselectAll();
+        console.log(e);
       },
     };
   },
@@ -63,7 +72,7 @@ export default {
       :defaultColDef="defaultColDef"
       rowSelection="multiple"
       animateRows="true"
-      @cell-clicked="cellWasClicked"
+      @cell-clicked="collectColumn"
       @grid-ready="onGridReady"
       :autoGroupColumnDef="autoGroupColumnDef"
       :groupDisplayType="groupDisplayType"
