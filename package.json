@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "ag-grid-community": "^29.0.0",
+    "@ag-grid-community/vue": "^29.0.0",
+    "@ag-grid-community/core": "^29.0.0",
+    "ag-grid-enterprise": "^29.0.0",
     "ag-grid-vue3": "^29.0.0",
     "vue": "^3.2.45"
   },
