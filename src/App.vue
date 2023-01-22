@@ -1,3 +1,22 @@
+<template>
+  <div class="container">
+    <button @click="deselectRows">deselect rows</button>
+    <ag-grid-vue
+      class="ag-theme-material"
+      style="height: 500px"
+      :columnDefs="columnDefs"
+      :rowData="rowData"
+      :defaultColDef="defaultColDef"
+      rowSelection="multiple"
+      animateRows="true"
+      @cell-clicked="collectColumn"
+      @grid-ready="onGridReady"
+    >
+    </ag-grid-vue>
+    <div></div>
+  </div>
+</template>
+
 <script>
 import { AgGridVue } from "ag-grid-vue3";
 import { reactive, onMounted, ref, h } from "vue";
@@ -12,7 +31,7 @@ export default {
   name: "App",
   components: {
     AgGridVue,
-    Image,
+    Image
   },
   setup() {
     const gridApi = ref(null);
@@ -25,22 +44,17 @@ export default {
       const data = e.data;
       let info = "\nІнформація по рядку:\n(назва колонки та значення)\n";
       for (let col in data) {
-        info += `
-          \t ${col} - ${data[col]}
-            `;
+        info += `\n\t ${col} - ${data[col]}`;
       }
       alert(info);
     };
 
     const rowData = reactive(values);
-
     const columnDefs = reactive(columns);
-
     const defaultColDef = reactive({
       sortable: true,
       filter: false,
       resizable: true,
-      suppressColumnVirtualisation: true,
       autoSizeColumn: true,
       width: 150,
       floatingFilter: true,
@@ -55,32 +69,11 @@ export default {
       deselectRows: (e) => {
         gridApi.value.deselectAll();
         console.log(e);
-      },
+      }
     };
   },
 };
 </script>
-
-<template>
-  <div class="container">
-    <button @click="deselectRows">deselect rows</button>
-    <ag-grid-vue
-      class="ag-theme-material"
-      style="height: 500px"
-      :columnDefs="columnDefs"
-      :rowData="rowData"
-      :defaultColDef="defaultColDef"
-      rowSelection="multiple"
-      animateRows="true"
-      @cell-clicked="collectColumn"
-      @grid-ready="onGridReady"
-      :autoGroupColumnDef="autoGroupColumnDef"
-      :groupDisplayType="groupDisplayType"
-    >
-    </ag-grid-vue>
-    <div></div>
-  </div>
-</template>
 
 <style>
 #app {
