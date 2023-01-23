@@ -1,12 +1,13 @@
 <template>
   <div class="container">
-    <button @click="deselectRows">deselect rows</button>
     <ag-grid-vue
-      class="ag-theme-material"
+      class="ag-theme-alpine"
       style="height: 500px"
       :columnDefs="columnDefs"
       :rowData="rowData"
       :defaultColDef="defaultColDef"
+      :statusBar="statusBar"
+      :enableRangeSelection="true"
       rowSelection="multiple"
       animateRows="true"
       @cell-clicked="collectColumn"
@@ -14,24 +15,27 @@
     >
     </ag-grid-vue>
     <div></div>
+    <BarTotal />
   </div>
 </template>
 
 <script>
 import { AgGridVue } from "ag-grid-vue3";
-import { reactive, onMounted, ref, h } from "vue";
+import { reactive, ref } from "vue";
 import { values } from "./utils/values";
 import { columns } from "./utils/columns";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-material.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 
 import Image from "./components/Image.vue";
+import BarTotal from "./components/BarTotal.vue";
 
 export default {
   name: "App",
   components: {
     AgGridVue,
-    Image
+    Image,
+    BarTotal,
   },
   setup() {
     const gridApi = ref(null);
@@ -60,31 +64,34 @@ export default {
       floatingFilter: true,
     });
 
+    const statusBar = {
+      statusPanels: [
+        { statusPanel: "agTotalRowCountComponent", align: "left" },
+        // { statusPanel: totalSumCol3 , align: "right"},
+        { statusPanel: "agTotalAndFilteredRowCountComponent", align: "left" },
+        { statusPanel: "agAggregationComponent" },
+      ],
+    };
+
     return {
       rowData,
       columnDefs,
       defaultColDef,
       onGridReady,
       collectColumn,
-      deselectRows: (e) => {
-        gridApi.value.deselectAll();
-        console.log(e);
-      }
+      statusBar,
     };
   },
 };
 </script>
 
 <style>
-#app {
-  max-width: 100vw;
-}
 .container {
   margin: 30px;
   padding: 10px;
   border: 2px solid white;
   background-color: rgb(35, 97, 2);
-  min-width: 950px;
+  min-width: 920px;
 }
 
 .ag-cell-value[col-id="Col5"] {

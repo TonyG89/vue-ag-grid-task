@@ -31,7 +31,7 @@ export const randomObj = () => {
         val3: makeInt(100, 4), //random float 4 decimal,
         val4: makeInt(100), //random int,
         val5: makeInt(100), //random int,
-        val6: "https://picsum.photos/120/50?random=" + makeInt(4), //random img path,
+        val6: "https://picsum.photos/120/50?random=" + makeInt(50), //random img path,
         val7: makeString(10), //random string, length 10,
         val8: takeString(randomStringArray(5)), //одно из 5ти значений строк [str1, str2, str3, str4, str5]
     }

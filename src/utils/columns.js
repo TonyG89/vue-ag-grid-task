@@ -4,10 +4,9 @@ import 'ag-grid-enterprise';
 const aggCol3 = params => {
   let suma = params.values.reduce((sum, str) => {
     const num = str.slice(0, -3)
-    console.log(+num);
     return sum + +num
   }, 0)
-  return suma + " кг"
+  return suma.toFixed(2) + " кг"
 }
 
 export const columns = [
@@ -32,9 +31,9 @@ export const columns = [
       {
         field: "Col6",
         filter: "agTextColumnFilter",
-        filterParams: {
-          buttons: ['reset', 'apply']
-        }
+        // filterParams: {
+        //   buttons: ['reset', 'apply']
+        // }
       }],
   },
 ]
